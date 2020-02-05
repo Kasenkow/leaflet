@@ -1,0 +1,35 @@
+---
+title: "Leaflet test"
+author: "Anton Kasenkov"
+date: "05 02 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      fig.width = 12,
+                      fig.height = 8,
+                      warning = FALSE,
+                      message = FALSE)
+pacman::p_load(tidyverse, leaflet, knitr)
+```
+
+## 5th of February, 2020
+
+Greetings from Moscow, Russia!
+
+```{r dogemap}
+dogeicon <- makeIcon(iconUrl = "images/doge.png", 
+                    iconWidth = 40, iconHeight = 40,
+                    iconAnchorX = 31, iconAnchorY = 16)
+
+set.seed(2020)
+markers <-
+        tibble(lng = runif(30, min = 37.615, max = 37.625),
+               lat = runif(30, min = 55.750, max = 55.759),
+               popup = sprintf("doge_%s", 1:30))
+markers %>%
+        leaflet() %>%
+        addTiles() %>%
+        addMarkers(icon = dogeicon, clusterOptions = markerClusterOptions())
+```
